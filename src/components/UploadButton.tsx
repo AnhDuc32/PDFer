@@ -153,7 +153,7 @@ const UploadButton = () => {
       {/* DialogTitle is included for accessibility, but hidden visually */}
       <DialogTitle className="sr-only">Upload PDF</DialogTitle>
 
-      <DialogContent>
+      <DialogContent className="max-w-lg">
         <UploadDropZone />
       </DialogContent>
     </Dialog>
