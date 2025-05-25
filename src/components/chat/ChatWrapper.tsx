@@ -14,11 +14,14 @@ interface ChatWrapperProps {
 const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
   const { data, isLoading } = trpc.getFileUploadStatus.useQuery(
     {
-      fileId,
+      fileId: fileId,
     },
     {
-      refetchInterval: (data) =>
-        data?.status === "SUCCESS" || data?.status === "FAILED" ? false : 500,
+      refetchInterval: (query) =>
+        query.state.data?.status === "SUCCESS" ||
+        query.state.data?.status === "FAILED"
+          ? false
+          : 500,
     }
   );
 

@@ -20,7 +20,7 @@ interface Props {
   children: ReactNode;
 }
 
-export const ChatCOntextProvider = ({ fileId, children }) => {
+export const ChatCOntextProvider = ({ fileId, children }: Props) => {
   const [message, setMessage] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
