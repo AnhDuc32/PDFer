@@ -102,9 +102,9 @@ ${message}
     },
   });
 
-  const stream = (await model.generateContentStream({
+  const streamResponse = await model.generateContentStream({
     contents: messages,
-  })) as unknown as AsyncIterable<{ text(): string }>;
+  });
 
   // Collect the full response for onCompletion
   let fullResponse = "";
@@ -114,13 +114,16 @@ ${message}
   const readableStream = new ReadableStream({
     async start(controller) {
       try {
-        for await (const chunk of stream) {
-          const text = chunk.text();
-          if (text) {
-            fullResponse += text; // Accumulate the response
-            controller.enqueue(encoder.encode(text));
+        for await (const item of streamResponse.stream) {
+          if (item.candidates) {
+            const text = item.candidates[0].content.parts[0].text;
+            if (text) {
+              fullResponse += text; // Accumulate the response
+              controller.enqueue(encoder.encode(text)); // Send chunk to client
+            }
           }
         }
+
         // Save the assistant's response to the database
         await db.message.create({
           data: {
