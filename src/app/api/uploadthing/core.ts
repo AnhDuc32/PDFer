@@ -13,11 +13,11 @@ export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   pdfUploader: f({
     pdf: {
-      maxFileSize: "4MB",
+      maxFileSize: "32MB",
     },
   })
     // Set permissions and file types for this FileRoute
-    .middleware(async ({ req }) => {
+    .middleware(async () => {
       const { getUser } = getKindeServerSession();
       const user = await getUser();
 
@@ -43,8 +43,6 @@ export const ourFileRouter = {
         const loader = new PDFLoader(blob);
 
         const pageLevelDocs = await loader.load();
-
-        const pagesAmt = pageLevelDocs.length;
 
         const pineconeIndex = pinecone.Index("pdfer");
 
