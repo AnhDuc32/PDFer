@@ -18,6 +18,7 @@ model User {
   email   String    @unique
   File    File[]
   Message Message[]
+  Quiz    Quiz[]
 }
 
 enum UploadStatus {
@@ -38,6 +39,7 @@ model File {
   updatedAt    DateTime     @updatedAt
   User         User?        @relation(fields: [userId], references: [id])
   userId       String?
+  Quiz         Quiz[]
 }
 
 model Message {
@@ -50,4 +52,31 @@ model Message {
   userId        String?
   File          File?    @relation(fields: [fileId], references: [id])
   fileId        String?
+}
+
+enum QuizType {
+  mcq
+}
+
+model Quiz {
+  id        String     @id @default(cuid())
+  fileId    String
+  topic     String
+  quizType  QuizType
+  File      File       @relation(fields: [fileId], references: [id])
+  questions Question[]
+  User      User?      @relation(fields: [userId], references: [id])
+  userId    String?
+}
+
+model Question {
+  id           String   @id @default(cuid())
+  question     String
+  answer       String
+  quizId       String
+  options      Json
+  isCorrect    Boolean?
+  questionType QuizType
+  userAnswer   String?
+  Quiz         Quiz     @relation(fields: [quizId], references: [id])
 }

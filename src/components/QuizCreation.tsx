@@ -41,8 +41,10 @@ const QuizCreation = (props: Props) => {
     alert(JSON.stringify(input, null, 2));
   };
 
+  form.watch();
+
   return (
-    <Card>
+    <Card className="border-none">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Quiz Creation</CardTitle>
 

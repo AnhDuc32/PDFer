@@ -153,7 +153,7 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
             {/* DialogTitle is included for accessibility, but hidden visually */}
             <DialogTitle className="sr-only">Generate Quiz</DialogTitle>
 
-            <DialogContent className="max-w-lg p-10">
+            <DialogContent className="max-w-lg p-0">
               <QuizCreation />
             </DialogContent>
           </Dialog>
