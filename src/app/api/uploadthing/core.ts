@@ -13,7 +13,7 @@ export const ourFileRouter = {
   // Define as many FileRoutes as you like, each with a unique routeSlug
   pdfUploader: f({
     pdf: {
-      maxFileSize: "32MB",
+      maxFileSize: "16MB",
     },
   })
     // Set permissions and file types for this FileRoute

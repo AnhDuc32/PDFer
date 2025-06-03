@@ -20,7 +20,7 @@ const Navbar = async () => {
         <div className="flex h-14 items-center justify-between border-b border-zinc-200">
           <Link href="/" className="flex z-40 font-semibold">
             <span className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent font-bold text-xl">
-              PDFer
+              PDFer.
             </span>
           </Link>
 
