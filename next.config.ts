@@ -1,7 +1,21 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [
+      {
+        source: "/sign-in",
+        destination: "/api/auth/login",
+        permanent: true,
+      },
+      {
+        source: "/sign-in",
+        destination: "/api/auth/register",
+        permanent: true,
+      },
+    ];
+  },
+
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.resolve.alias.canvas = false;
     config.resolve.alias.encoding = false;
