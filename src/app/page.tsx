@@ -28,7 +28,6 @@ export default function Home() {
         <Link
           className={buttonVariants({ size: "lg", className: "mt-5" })}
           href="/dashboard"
-          target="_blank"
         >
           Get started <ArrowRight className="h-5 w-5" />
         </Link>
@@ -103,7 +102,7 @@ export default function Home() {
                 Sign up for an account
               </span>
               <span className="mt-2 text-zinc-700">
-                Enter starting out with a free plan.
+                Enter starting out. It&apos;s free!
               </span>
             </div>
           </li>

@@ -64,10 +64,9 @@ const ChatWrapper = ({ fileId }: ChatWrapperProps) => {
         <div className="flex-1 flex justify-center items-center flex-col mb-28">
           <div className="flex flex-col items-center gap-2">
             <XCircle className="h-8 w-8 text-red-500" />
-            <h3 className="font-semibold text-xl">Too many pages in PDF</h3>
+            <h3 className="font-semibold text-xl">PDF file is too large</h3>
             <p className="text-zinc-500 text-sm">
-              Your <span className="font-medium">Free</span> plan supports up to
-              5 pages per PDF.
+              PDFer supports file up to <span className="font-bold">16MB</span>.
             </p>
 
             <Link
