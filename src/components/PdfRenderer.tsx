@@ -3,6 +3,7 @@
 import {
   ChevronDown,
   ChevronUp,
+  Lightbulb,
   Loader2,
   RotateCw,
   Search,
@@ -27,6 +28,8 @@ import {
 } from "./ui/dropdown-menu";
 import SimpleBar from "simplebar-react";
 import PdfFullscreen from "./PdfFullscreen";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
+import QuizCreation from "./QuizCreation";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -38,6 +41,8 @@ interface PdfRendererProps {
 }
 
 const PdfRenderer = ({ url }: PdfRendererProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const { width, ref } = useResizeDetector();
 
   const [numPages, setNumPages] = useState<number>();
@@ -128,6 +133,31 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
         </div>
 
         <div className="space-x-2">
+          {/* Button to generate quizizz */}
+          <Dialog
+            open={isOpen}
+            onOpenChange={(o) => {
+              if (!o) {
+                setIsOpen(o);
+              }
+            }}
+          >
+            <DialogTrigger asChild onClick={() => setIsOpen(true)}>
+              <Button className="cursor-pointer">
+                <p>Create Quiz</p>
+
+                <Lightbulb color="yellow" fill="yellow" />
+              </Button>
+            </DialogTrigger>
+
+            {/* DialogTitle is included for accessibility, but hidden visually */}
+            <DialogTitle className="sr-only">Generate Quiz</DialogTitle>
+
+            <DialogContent className="max-w-lg p-10">
+              <QuizCreation />
+            </DialogContent>
+          </Dialog>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button aria-label="zoom" variant="ghost" className="gap-1.5">
