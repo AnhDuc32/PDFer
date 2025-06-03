@@ -11,6 +11,7 @@ import {
 import { Icons } from "./Icons";
 import Link from "next/link";
 import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { LogOutIcon } from "lucide-react";
 
 interface UserAccountNavProps {
   email: string | undefined;
@@ -69,7 +70,11 @@ const UserAccountNav = ({ email, imageUrl, name }: UserAccountNavProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem className="cursor-pointer">
-          <LogoutLink>Log out</LogoutLink>
+          <div className="flex flex-row gap-2 items-center">
+            <LogoutLink>Log out</LogoutLink>
+
+            <LogOutIcon />
+          </div>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
