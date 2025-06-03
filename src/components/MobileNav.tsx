@@ -1,5 +1,6 @@
 "use client";
 
+import { RegisterLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { ArrowRight, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,13 +36,13 @@ const MobileNav = ({ isAuth }: { isAuth: boolean }) => {
             {!isAuth ? (
               <>
                 <li>
-                  <Link
+                  <RegisterLink
                     onClick={() => closeOnCurrent("/sign-up")}
                     href="/sign-up"
                     className="flex items-center w-full font-semibold text-green-600"
                   >
                     Get started <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
+                  </RegisterLink>
                 </li>
 
                 <li className="my-3 h-px w-full bg-gray-300" />

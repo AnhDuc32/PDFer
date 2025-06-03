@@ -82,7 +82,7 @@ const Dashboard = () => {
 
                   <Button
                     size="sm"
-                    className="w-full"
+                    className="w-full cursor-pointer"
                     variant="destructive"
                     onClick={() => deleteFile({ id: file.id })}
                   >

@@ -78,10 +78,7 @@ const UploadDropZone = () => {
           className="border h-64 m-4 border-dashed border-gray-300 rounded-lg"
         >
           <div className="flex items-center justify-center h-full w-full">
-            <label
-              htmlFor="dropzone-file"
-              className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
-            >
+            <div className="flex flex-col items-center justify-center w-full h-full rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
               <div className="flex flex-col items-center justify-center pt-5 pb-6">
                 <Cloud className="h-6 w-6 text-zinc-500 mb-2" />
 
@@ -120,13 +117,8 @@ const UploadDropZone = () => {
                 </div>
               ) : null}
 
-              <input
-                type="file"
-                id="dropzone-file"
-                className="hidden"
-                {...getInputProps()}
-              />
-            </label>
+              <input type="file" className="hidden" {...getInputProps()} />
+            </div>
           </div>
         </div>
       )}
@@ -147,7 +139,7 @@ const UploadButton = () => {
       }}
     >
       <DialogTrigger asChild onClick={() => setIsOpen(true)}>
-        <Button>Upload PDF</Button>
+        <Button className="cursor-pointer">Upload PDF</Button>
       </DialogTrigger>
 
       {/* DialogTitle is included for accessibility, but hidden visually */}

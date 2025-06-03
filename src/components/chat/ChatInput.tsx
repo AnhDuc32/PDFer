@@ -44,6 +44,7 @@ const ChatInput = ({ isDisabled }: ChatInputProps) => {
                 disabled={isLoading || isDisabled}
                 aria-label="send message"
                 className="absolute bottom-1.5 right-[8px]"
+                variant="ghost"
                 onClick={() => {
                   addMessage();
 

@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/sign-in",
+        source: "/sign-up",
         destination: "/api/auth/register",
         permanent: true,
       },
