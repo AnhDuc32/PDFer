@@ -1,4 +1,4 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). In this project, we aim to build a web application to summarize and generate quizizz from given PDFs.
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app). In this project, we aim to build a web application to summarize information and generate quizizz from given PDFs.
 
 ## Getting Started
 
