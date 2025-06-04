@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { jsonrepair } from "jsonrepair";
 
 export const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_KEY!);
 
@@ -55,7 +56,7 @@ export async function strict_output(
     const modelInstance = genAI.getGenerativeModel({ model: model });
     const prompt = [
       {
-        role: "system",
+        role: "user",
         parts: [{ text: system_prompt + output_format_prompt + error_msg }],
       },
       { role: "user", parts: [{ text: user_prompt.toString() }] },
@@ -71,6 +72,9 @@ export async function strict_output(
         '"'
       ) ?? "";
 
+    // Remove Markdown code block markers if present
+    res = res.replace(/```(?:json)?\s*([\s\S]*?)\s*```/, "$1").trim();
+
     // ensure that we don't replace away apostrophes in text
     res = res.replace(/(\w)"(\w)/g, "$1'$2");
 
@@ -85,7 +89,7 @@ export async function strict_output(
 
     // try-catch block to ensure output format is adhered to
     try {
-      let output = JSON.parse(res);
+      let output = JSON.parse(jsonrepair(res));
 
       if (list_input) {
         if (!Array.isArray(output)) {
