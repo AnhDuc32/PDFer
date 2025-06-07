@@ -22,23 +22,53 @@ import {
 } from "./ui/form";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
-type Props = {};
+interface Props {
+  fileId: string;
+}
 
 type Input = z.infer<typeof quizCreationSchema>;
 
-const QuizCreation = (props: Props) => {
+const QuizCreation = ({ fileId }: Props) => {
+  const router = useRouter();
+
+  const { mutate: getQuiz, isPending } = useMutation({
+    mutationFn: async ({ amount, topic, fileId }: Input) => {
+      const response = await axios.post("/api/quiz", {
+        amount,
+        topic,
+        fileId,
+      });
+      return response.data;
+    },
+  });
+
   const form = useForm<Input>({
     resolver: zodResolver(quizCreationSchema),
     defaultValues: {
       amount: 3,
       topic: "",
-      type: "mcq",
+      fileId: fileId,
     },
   });
 
   const onSubmit = (input: Input) => {
-    alert(JSON.stringify(input, null, 2));
+    getQuiz(
+      {
+        amount: input.amount,
+        topic: input.topic,
+        fileId: input.fileId,
+      },
+      {
+        onSuccess: ({ quizId }) => {
+          router.push(`/dashboard/${fileId}/${quizId}`);
+        },
+      }
+    );
   };
 
   form.watch();
@@ -94,8 +124,16 @@ const QuizCreation = (props: Props) => {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="cursor-pointer w-full">
-              Submit
+            <Button
+              disabled={isPending}
+              type="submit"
+              className="cursor-pointer w-full"
+            >
+              {isPending ? (
+                <Loader2 className="animate-spin h-4 w-4" />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </form>
         </Form>

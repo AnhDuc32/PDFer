@@ -38,9 +38,10 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 interface PdfRendererProps {
   url: string;
+  fileId: string;
 }
 
-const PdfRenderer = ({ url }: PdfRendererProps) => {
+const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { width, ref } = useResizeDetector();
@@ -154,7 +155,7 @@ const PdfRenderer = ({ url }: PdfRendererProps) => {
             <DialogTitle className="sr-only">Generate Quiz</DialogTitle>
 
             <DialogContent className="max-w-lg p-0">
-              <QuizCreation />
+              <QuizCreation fileId={fileId} />
             </DialogContent>
           </Dialog>
 
