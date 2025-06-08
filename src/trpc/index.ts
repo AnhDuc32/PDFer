@@ -10,7 +10,8 @@ export const appRouter = router({
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
-    if (!user.id || !user.email) throw new TRPCError({ code: "UNAUTHORIZED" });
+    if (!user || !user.id || !user.email)
+      throw new TRPCError({ code: "UNAUTHORIZED" });
 
     // Check if the user is existed in the db
     const dbUser = await db.user.findFirst({
