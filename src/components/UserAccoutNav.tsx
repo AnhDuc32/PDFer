@@ -65,16 +65,13 @@ const UserAccountNav = ({ email, imageUrl, name }: UserAccountNavProps) => {
           </Link>
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild>{}</DropdownMenuItem>
-
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="cursor-pointer">
-          <div className="flex flex-row gap-2 items-center">
-            <LogoutLink className=" text-red-500">Log out</LogoutLink>
-
-            <LogOutIcon color="red" />
-          </div>
+        <DropdownMenuItem asChild>
+          <LogoutLink className="cursor-pointer">
+            Log out
+            <LogOutIcon color="black" />
+          </LogoutLink>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

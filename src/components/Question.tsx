@@ -10,7 +10,7 @@ import QuestionCounter from "./QuestionCounter";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { z } from "zod";
-import { checkAnswerSchema } from "@/schemas/form/quiz";
+import { checkAnswerSchema, endQuizSchema } from "@/schemas/form/quiz";
 import { toast } from "sonner";
 import Link from "next/link";
 import { cn, formatTimeDelta } from "@/lib/utils";
@@ -37,7 +37,7 @@ const Question = ({ quiz }: Props) => {
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [hasEnded]);
 
   const currentQuestion = useMemo(() => {
     return quiz.questions[questionIndex];
@@ -51,6 +51,16 @@ const Question = ({ quiz }: Props) => {
       };
       const response = await axios.post("/api/checkAnswer", payload);
 
+      return response.data;
+    },
+  });
+
+  const { mutate: endGame } = useMutation({
+    mutationFn: async () => {
+      const payload: z.infer<typeof endQuizSchema> = {
+        quizId: quiz.id,
+      };
+      const response = await axios.post("/api/endQuiz", payload);
       return response.data;
     },
   });
@@ -69,6 +79,7 @@ const Question = ({ quiz }: Props) => {
         }
 
         if (questionIndex === quiz.questions.length - 1) {
+          endGame();
           setHasEnded(true);
           return;
         }
@@ -110,13 +121,14 @@ const Question = ({ quiz }: Props) => {
   if (hasEnded) {
     return (
       <div className="absolute flex flex-col justify-center top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="px-4 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
-          You completed in {"3m 4s"}
+        <div className="p-4 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap text-xl">
+          You completed in{" "}
+          {formatTimeDelta(differenceInSeconds(now, quiz.timeStarted ?? 0))}
         </div>
 
         <Link
           href={`/statistics/${quiz.id}`}
-          className={cn(buttonVariants(), "mt-2")}
+          className={cn(buttonVariants({ size: "lg" }), "mt-2 text-xl p-6")}
         >
           View Statistics
           <BarChart className=" w-4 h-4 ml-2" />

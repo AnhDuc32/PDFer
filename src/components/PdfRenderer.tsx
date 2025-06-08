@@ -7,6 +7,7 @@ import {
   Loader2,
   RotateCw,
   Search,
+  TimerReset,
 } from "lucide-react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -30,6 +31,7 @@ import SimpleBar from "simplebar-react";
 import PdfFullscreen from "./PdfFullscreen";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "./ui/dialog";
 import QuizCreation from "./QuizCreation";
+import History from "./History";
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   "pdfjs-dist/build/pdf.worker.min.mjs",
@@ -43,6 +45,8 @@ interface PdfRendererProps {
 
 const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const [isHistoryOpen, setIsHistoryOpen] = useState<boolean>(false);
 
   const { width, ref } = useResizeDetector();
 
@@ -154,8 +158,33 @@ const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
             {/* DialogTitle is included for accessibility, but hidden visually */}
             <DialogTitle className="sr-only">Generate Quiz</DialogTitle>
 
-            <DialogContent className="max-w-lg p-0">
+            <DialogContent className="max-w-sm p-0">
               <QuizCreation fileId={fileId} />
+            </DialogContent>
+          </Dialog>
+
+          {/* Button to view quiz history */}
+          <Dialog
+            open={isHistoryOpen}
+            onOpenChange={(o) => {
+              if (!o) {
+                setIsHistoryOpen(o);
+              }
+            }}
+          >
+            <DialogTrigger asChild onClick={() => setIsHistoryOpen(true)}>
+              <Button className="cursor-pointer">
+                <p>History</p>
+
+                <TimerReset />
+              </Button>
+            </DialogTrigger>
+
+            {/* DialogTitle is included for accessibility, but hidden visually */}
+            <DialogTitle className="sr-only">View history</DialogTitle>
+
+            <DialogContent className="max-w-sm p-0">
+              <History fileId={fileId} />
             </DialogContent>
           </Dialog>
 
