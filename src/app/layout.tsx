@@ -21,7 +21,7 @@ import "simplebar-react/dist/simplebar.min.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "PDFer - chatting with PDF",
+  title: "PDFer",
   description: "Chat with your documents in seconds using PDFer",
   icons: {
     icon: "/images/p.png",
