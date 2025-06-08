@@ -1,5 +1,6 @@
 import { User } from "lucide-react";
 import Image from "next/image";
+import type { StaticImageData } from "next/image";
 
 export const Icons = {
   user: User,
@@ -10,7 +11,8 @@ export const Icons = {
   }: {
     width?: number;
     height?: number;
-  } & React.ImgHTMLAttributes<HTMLImageElement>) => (
+    src?: string | StaticImageData;
+  } & Omit<React.ImgHTMLAttributes<HTMLImageElement>, "src">) => (
     <Image
       src="/images/p.png"
       alt="Logo"
