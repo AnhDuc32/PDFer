@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import {
@@ -16,31 +15,18 @@ import { LogOutIcon } from "lucide-react";
 interface UserAccountNavProps {
   email: string | undefined;
   name: string;
-  imageUrl: string;
 }
 
-const UserAccountNav = ({ email, imageUrl, name }: UserAccountNavProps) => {
+const UserAccountNav = ({ email, name }: UserAccountNavProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="overflow-visible">
         <Button className="rounded-full h-8 w-8 aspect-square bg-slate-400">
           <Avatar className="relative w-8 h-8 cursor-pointer">
-            {imageUrl ? (
-              <div className="relative aspect-square h-full w-full">
-                <Image
-                  fill
-                  src={imageUrl}
-                  alt="profile picture"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            ) : (
-              <AvatarFallback>
-                <span className="sr-only">{name}</span>
-
-                <Icons.user className="h-4 w-4 text-zinc-900" />
-              </AvatarFallback>
-            )}
+            <AvatarFallback>
+              <span className="sr-only">{name}</span>
+              <Icons.user className="h-4 w-4 text-zinc-900" />
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
