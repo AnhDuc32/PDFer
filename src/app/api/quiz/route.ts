@@ -15,7 +15,6 @@ interface mcqQuestion {
 
 export async function GET(req: Request) {
   try {
-    console.log(process.env.VERCEL_URL)
     const { searchParams } = new URL(req.url);
     const fileId = searchParams.get("fileId");
 
@@ -43,14 +42,13 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const { getUser } = getKindeServerSession();
+    const { getUser, getAccessToken } = getKindeServerSession();
     const user = await getUser();
+    const accessToken = await getAccessToken();
 
     if (!user) {
       return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
     }
-
-    console.log(user)
 
     const body = await req.json();
 
@@ -69,11 +67,19 @@ export async function POST(req: Request) {
       ? `https://${process.env.VERCEL_URL}/api/questions`
       : `http://${process.env.LOCAL_URL}:${process.env.PORT}/api/questions`;
 
-    const response = await axios.post(url, {
-      amount,
-      topic,
-      fileId,
-    });
+    const response = await axios.post(
+      url,
+      {
+        amount,
+        topic,
+        fileId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
 
     const data = response.data;
 
