@@ -62,13 +62,7 @@ export async function POST(req: Request) {
       },
     });
 
-    let url;
-
-    if (process.env.VERCEL_URL) {
-      url = `https://${process.env.VERCEL_URL}/api/questions`;
-    } else {
-      url = `http://${process.env.LOCAL_URL}:${process.env.PORT}/api/questions`;
-    }
+    const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/questions` :  `http://${process.env.LOCAL_URL}:${process.env.PORT}/api/questions`;
 
     const response = await axios.post(url, {
       amount,
