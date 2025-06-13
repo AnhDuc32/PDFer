@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { quizCreationSchema } from "@/schemas/form/quiz";
-// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import axios from "axios";
@@ -15,6 +15,7 @@ interface mcqQuestion {
 
 export async function GET(req: Request) {
   try {
+    console.log(process.env.VERCEL_URL)
     const { searchParams } = new URL(req.url);
     const fileId = searchParams.get("fileId");
 
@@ -41,15 +42,15 @@ export async function GET(req: Request) {
 }
 
 export async function POST(req: Request) {
-  console.log(process.env.VERCEL_URL)
-
   try {
-    // const { getUser } = getKindeServerSession();
-    // const user = await getUser();
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
 
-    // if (!user) {
-    //   return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
-    // }
+    if (!user) {
+      return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
+    }
+
+    console.log(user)
 
     const body = await req.json();
 
@@ -57,6 +58,7 @@ export async function POST(req: Request) {
 
     const quiz = await db.quiz.create({
       data: {
+        userId: user.id,
         topic: topic,
         fileId: fileId,
         timeStarted: new Date(),
