@@ -42,12 +42,15 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
+    console.log(process.env.VERCEL_URL);
     const { getUser } = getKindeServerSession();
     const user = await getUser();
 
     if (!user) {
       return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
     }
+
+    console.log(user);
 
     const body = await req.json();
 
@@ -62,7 +65,9 @@ export async function POST(req: Request) {
       },
     });
 
-    const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/questions` :  `http://${process.env.LOCAL_URL}:${process.env.PORT}/api/questions`;
+    const url = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}/api/questions`
+      : `http://${process.env.LOCAL_URL}:${process.env.PORT}/api/questions`;
 
     const response = await axios.post(url, {
       amount,
@@ -102,7 +107,7 @@ export async function POST(req: Request) {
     } else {
       console.error(error);
       return NextResponse.json(
-        { error: `An unexpected error occured: ${error}`, },
+        { error: `An unexpected error occured: ${error}` },
         { status: 500 }
       );
     }
