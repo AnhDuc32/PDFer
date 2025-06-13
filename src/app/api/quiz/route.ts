@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { quizCreationSchema } from "@/schemas/form/quiz";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
+// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import axios from "axios";
