@@ -1,4 +1,4 @@
-import { db } from "@/db/index";
+import { db } from "@/db";
 import { checkAnswerSchema } from "@/schemas/form/quiz";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";

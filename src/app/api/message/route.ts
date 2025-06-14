@@ -1,4 +1,4 @@
-import { db } from "@/db/index";
+import { db } from "@/db";
 import { genAI } from "@/lib/googleai";
 import { pinecone } from "@/lib/pinecone";
 import { SendMessageValidator } from "@/lib/validators/SendMessageValidator";
