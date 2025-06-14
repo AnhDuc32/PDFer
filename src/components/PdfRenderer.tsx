@@ -140,7 +140,7 @@ const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
         </div>
 
         <div className="space-x-2">
-          {/* Button to generate quizizz */}
+          {/* Button to generate quizzes */}
           <Dialog
             open={isOpen}
             onOpenChange={(o) => {

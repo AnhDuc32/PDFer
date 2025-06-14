@@ -20,7 +20,7 @@ export default function Home() {
         </h1>
 
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-          Simply upload your file, start asking questions and creating quizizz
+          Simply upload your file, start asking questions and creating quizzes
           right away.
         </p>
 
@@ -118,10 +118,10 @@ export default function Home() {
             <div className="flex flex-col space-y-2 border-zinc-300 py-2 pl-4 md:border-t-2 md:pb-0 md:pl-0 md:pt-4">
               <span className="text-sm font-medium text-blue-500">Step 3</span>
               <span className="text-xl font-semibold">
-                Start questions & quizizz
+                Start Questions & Quizzes
               </span>
               <span className="mt-2 text-zinc-700">
-                It&apos;s that simple. Try out Pdfer today!
+                It&apos;s that simple. Try out PDFer today!
               </span>
             </div>
           </li>
