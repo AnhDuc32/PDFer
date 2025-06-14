@@ -15,8 +15,11 @@ interface mcqQuestion {
 
 export async function GET(req: Request) {
   try {
-    const { getUser } = getKindeServerSession();
+    const { getUser, getAccessToken } = getKindeServerSession();
     const user = await getUser();
+    const accessToken = await getAccessToken();
+    console.log(accessToken);
+    console.log(user);
 
     if (!user || !user.id) {
       return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });

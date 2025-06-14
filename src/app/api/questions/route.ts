@@ -2,7 +2,6 @@ import { db } from "@/db";
 import { strict_output } from "@/lib/googleai";
 import { pinecone } from "@/lib/pinecone";
 import { quizCreationSchema } from "@/schemas/form/quiz";
-// import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { PineconeStore } from "@langchain/pinecone";
 import { NextResponse } from "next/server";
@@ -13,17 +12,9 @@ export const POST = async (req: Request) => {
     const body = await req.json();
     const { amount, topic, fileId } = quizCreationSchema.parse(body);
 
-    // const { getUser } = getKindeServerSession();
-    // const user = await getUser();
-
-    // if (!user || !user.id) {
-    //   return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
-    // }
-
     const file = await db.file.findFirst({
       where: {
         id: fileId,
-        // userId: user.id,
       },
     });
 
