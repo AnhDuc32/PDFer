@@ -2,6 +2,8 @@
 
 import {
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   ChevronUp,
   Lightbulb,
   Loader2,
@@ -197,28 +199,24 @@ const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent>
-              <DropdownMenuItem onSelect={() => setScale(0.5)}>
-                50%
+              <DropdownMenuItem onSelect={() => setScale(0.6)}>
+                60%
               </DropdownMenuItem>
 
-              <DropdownMenuItem onSelect={() => setScale(0.75)}>
-                75%
+              <DropdownMenuItem onSelect={() => setScale(0.8)}>
+                80%
               </DropdownMenuItem>
 
               <DropdownMenuItem onSelect={() => setScale(1)}>
                 100%
               </DropdownMenuItem>
 
-              <DropdownMenuItem onSelect={() => setScale(1.5)}>
-                150%
+              <DropdownMenuItem onSelect={() => setScale(1.2)}>
+                120%
               </DropdownMenuItem>
 
-              <DropdownMenuItem onSelect={() => setScale(2)}>
-                200%
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onSelect={() => setScale(2.5)}>
-                250%
+              <DropdownMenuItem onSelect={() => setScale(1.4)}>
+                140%
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -260,6 +258,38 @@ const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
                   key={"@" + renderScale}
                 />
               ) : null}
+
+              <div className="pointer-events-none fixed top-1/2 left-[28%] transform -translate-x-1/2 -translate-y-1/2 flex justify-between w-[51%] z-10">
+                <ChevronLeft
+                  color="gray"
+                  className={cn(
+                    "cursor-pointer pointer-events-auto",
+                    currPage <= 1 && "opacity-50 pointer-events-none"
+                  )}
+                  onClick={() => {
+                    if (currPage > 1) {
+                      setCurrPage((prev) => (prev - 1 > 1 ? prev - 1 : 1));
+                      setValue("page", String(currPage - 1));
+                    }
+                  }}
+                />
+                <ChevronRight
+                  color="gray"
+                  className={cn(
+                    "cursor-pointer pointer-events-auto",
+                    (numPages === undefined || currPage === numPages) &&
+                      "opacity-50 pointer-events-none"
+                  )}
+                  onClick={() => {
+                    if (numPages !== undefined && currPage < numPages) {
+                      setCurrPage((prev) =>
+                        prev + 1 > numPages! ? numPages! : prev + 1
+                      );
+                      setValue("page", String(currPage + 1));
+                    }
+                  }}
+                />
+              </div>
 
               <Page
                 className={cn(isLoading ? "hidden" : "")}

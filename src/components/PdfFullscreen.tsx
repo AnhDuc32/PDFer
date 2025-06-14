@@ -36,8 +36,8 @@ const PdfFullscreen = ({ fileUrl }: PdfFullscreenProps) => {
       {/* DialogTitle is included for accessibility, but hidden visually */}
       <DialogTitle className="sr-only">Upload PDF</DialogTitle>
 
-      <DialogContent className="max-w-7xl w-full">
-        <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)] mt-6">
+      <DialogContent className="max-w-4xl w-full">
+        <SimpleBar autoHide={false} className="max-h-[calc(100vh-6rem)] mt-6">
           <div ref={ref}>
             <Document
               loading={

@@ -26,7 +26,7 @@ const History = ({ fileId }: Props) => {
       </CardHeader>
 
       <CardContent>
-        <div className="space-y-8 max-h-[350px] overflow-y-scroll">
+        <div className="space-y-8 h-[350px] overflow-y-scroll">
           {quizs.map((quiz) => (
             <div className="flex items-center justify-between" key={quiz.id}>
               <div className="flex items-center">
