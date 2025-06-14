@@ -65,7 +65,7 @@ export const ourFileRouter = {
           },
         });
       } catch (error) {
-        console.log("Error: ", error);
+        console.log("Error embedding file to Pinecone: ", error);
         await db.file.update({
           data: {
             uploadStatus: "FAILED",

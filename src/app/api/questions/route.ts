@@ -59,21 +59,13 @@ export const POST = async (req: Request) => {
       }
     );
 
-    return NextResponse.json(
-      {
-        questions,
-      },
-      {
-        status: 200,
-      }
-    );
+    return NextResponse.json({ questions: questions }, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });
     } else {
-      console.error(error);
       return NextResponse.json(
-        { error: "An unexpected error occured." },
+        { error: `An unexpected error occured in /api/question: ${error}` },
         { status: 500 }
       );
     }

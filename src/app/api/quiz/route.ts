@@ -15,6 +15,13 @@ interface mcqQuestion {
 
 export async function GET(req: Request) {
   try {
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
+
+    if (!user || !user.id) {
+      return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
+    }
+
     const { searchParams } = new URL(req.url);
     const fileId = searchParams.get("fileId");
 
@@ -32,9 +39,10 @@ export async function GET(req: Request) {
 
     return NextResponse.json(quizzes);
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
-      { error: "An unexpected error occured." },
+      {
+        error: `An unexpected error occured in GET method of /api/quiz: ${error}`,
+      },
       { status: 500 }
     );
   }
@@ -42,11 +50,10 @@ export async function GET(req: Request) {
 
 export async function POST(req: Request) {
   try {
-    const { getUser, getAccessToken } = getKindeServerSession();
+    const { getUser } = getKindeServerSession();
     const user = await getUser();
-    const accessToken = await getAccessToken();
 
-    if (!user) {
+    if (!user || !user.id) {
       return NextResponse.json({ error: "UNAUTHORIZED" }, { status: 401 });
     }
 
@@ -64,33 +71,24 @@ export async function POST(req: Request) {
     });
 
     const url = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/questions`
+      ? `https://${process.env.VERCEL_URL as string}/api/questions`
       : `http://${process.env.LOCAL_URL}:${process.env.PORT}/api/questions`;
 
-    const response = await axios.post(
-      url,
-      {
-        amount,
-        topic,
-        fileId,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
+    const response = await axios.post(url, {
+      amount,
+      topic,
+      fileId,
+    });
 
     const data = response.data;
 
     const manyData = data.questions.map((question: mcqQuestion) => {
-      let options = [
+      const options = [
         question.answer,
         question.option1,
         question.option2,
         question.option3,
-      ];
-      options = options.sort(() => Math.random() - 0.5);
+      ].sort(() => Math.random() - 0.5);
 
       return {
         question: question.question,
@@ -104,16 +102,15 @@ export async function POST(req: Request) {
       data: manyData,
     });
 
-    return NextResponse.json({
-      quizId: quiz.id,
-    });
+    return NextResponse.json({ quizId: quiz.id }, { status: 200 });
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });
     } else {
-      console.error(error);
       return NextResponse.json(
-        { error: `An unexpected error occured: ${error}` },
+        {
+          error: `An unexpected error occured in POST method of /api/quiz: ${error}`,
+        },
         { status: 500 }
       );
     }
