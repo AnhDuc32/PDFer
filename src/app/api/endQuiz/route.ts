@@ -1,4 +1,4 @@
-import { db } from "@/db";
+import { db } from "@/db/index";
 import { endQuizSchema } from "@/schemas/form/quiz";
 import { NextResponse } from "next/server";
 
