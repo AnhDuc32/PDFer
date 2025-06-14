@@ -3,7 +3,7 @@ import { quizCreationSchema } from "@/schemas/form/quiz";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
-import axios from "axios";
+import { generateQuestions } from "@/lib/generateQuestions";
 
 interface mcqQuestion {
   question: string;
@@ -70,19 +70,9 @@ export async function POST(req: Request) {
       },
     });
 
-    const url = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}/api/questions`
-      : `http://${process.env.LOCAL_URL}:${process.env.PORT}/api/questions`;
+    const { questions } = await generateQuestions(amount, topic, fileId);
 
-    const response = await axios.post(url, {
-      amount,
-      topic,
-      fileId,
-    });
-
-    const data = response.data;
-
-    const manyData = data.questions.map((question: mcqQuestion) => {
+    const manyData = (questions as mcqQuestion[]).map((question) => {
       const options = [
         question.answer,
         question.option1,
