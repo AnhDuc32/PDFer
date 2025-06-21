@@ -259,11 +259,10 @@ const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
                 />
               ) : null}
 
-              <div className="pointer-events-none fixed top-1/2 left-[28%] transform -translate-x-1/2 -translate-y-1/2 flex justify-between w-[51%] z-10">
-                <ChevronLeft
-                  color="gray"
+              <div className="pointer-events-none fixed top-1/2 left-[29%] transform -translate-x-1/2 -translate-y-1/2 flex justify-between w-[53%] z-10">
+                <div
                   className={cn(
-                    "cursor-pointer pointer-events-auto",
+                    "cursor-pointer pointer-events-auto hover:bg-zinc-100 rounded-lg p-2",
                     currPage <= 1 && "opacity-50 pointer-events-none"
                   )}
                   onClick={() => {
@@ -272,11 +271,12 @@ const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
                       setValue("page", String(currPage - 1));
                     }
                   }}
-                />
-                <ChevronRight
-                  color="gray"
+                >
+                  <ChevronLeft color="gray" />
+                </div>
+                <div
                   className={cn(
-                    "cursor-pointer pointer-events-auto",
+                    "cursor-pointer pointer-events-auto hover:bg-zinc-100 rounded-lg p-2",
                     (numPages === undefined || currPage === numPages) &&
                       "opacity-50 pointer-events-none"
                   )}
@@ -288,7 +288,9 @@ const PdfRenderer = ({ url, fileId }: PdfRendererProps) => {
                       setValue("page", String(currPage + 1));
                     }
                   }}
-                />
+                >
+                  <ChevronRight color="gray" />
+                </div>
               </div>
 
               <Page
