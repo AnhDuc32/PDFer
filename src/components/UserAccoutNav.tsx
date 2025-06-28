@@ -54,7 +54,7 @@ const UserAccountNav = ({ email, name }: UserAccountNavProps) => {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem asChild>
-          <LogoutLink className="cursor-pointer">
+          <LogoutLink className="cursor-pointer" postLogoutRedirectURL="/">
             Log out
             <LogOutIcon color="black" />
           </LogoutLink>
